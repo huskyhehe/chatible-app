@@ -22,3 +22,66 @@
   </div>
 </div>
 {% endblock %}
+{% block scripts %}
+<script>
+  const wss_protocol = window.location.protocol === "https:" ? "wss://" : "ws://";
+  const chatSocket = new WebSocket(
+          wss_protocol + window.location.host + "/ws/chat/"
+  );
+  const messages = [];
+
+  chatSocket.onopen = function (e) {
+    document.querySelector("#chat-header").innerHTML =
+      "Welcome to Chatible";
+  };
+
+  chatSocket.onmessage = function (e) {
+    const data = JSON.parse(e.data);
+    const message = data["text"];
+    messages.push(message);
+
+    let str = '<ul class="space-y-2">';
+    messages.forEach(function (msg) {
+      str += `<li class="flex ${
+        msg.source === "bot"
+            ? "justify-start"
+            : "justify-end"
+      }">
+        <div class="relative max-w-xl px-4 py-2 rounded-lg shadow-md
+        ${
+          msg.source === "bot"
+            ? "text-gray-700 bg-white border border-gray-200"
+            : "text-white bg-blue-600"
+        }">
+        <span class="block font-normal">${msg.msg}</span>
+      </div></li>`;
+    });
+    str += "</ul>";
+    document.querySelector("#chat-log").innerHTML = str;
+  };
+
+  chatSocket.onclose = function (e) {
+    alert("Socket closed unexpectedly, please reload the page.");
+  };
+
+  document.querySelector("#chat-message-input").focus();
+  document.querySelector("#chat-message-input").onkeyup = function (e) {
+    if (e.keyCode === 13) {
+      // enter, return
+      document.querySelector("#chat-message-submit").click();
+    }
+  };
+
+  document.querySelector("#chat-message-submit").onclick = function (e) {
+    const messageInputDom = document.querySelector("#chat-message-input");
+    const message = messageInputDom.value;
+    chatSocket.send(
+      JSON.stringify({
+        text: message,
+      })
+    );
+
+    messageInputDom.value = "";
+  };
+</script>
+{% endblock %}
