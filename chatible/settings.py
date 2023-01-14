@@ -140,3 +140,13 @@ NPM_BIN_PATH = os.getenv('NPM_PATH')
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+# Channel layers
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [(os.getenv('REDIS_ENDPOINT_URI'))],
+        },
+    },
+}
