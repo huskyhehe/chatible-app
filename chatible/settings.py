@@ -44,8 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # local apps
-    'chatible',
     'theme',
+    'chat',
 
     # third-party apps
     'tailwind',
@@ -83,7 +83,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'chatible.wsgi.application'
 ASGI_APPLICATION = 'chatible.asgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -134,7 +133,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
 # Tailwind
 TAILWIND_APP_NAME = 'theme'
 NPM_BIN_PATH = os.getenv('NPM_PATH')
@@ -158,5 +156,7 @@ CHATTERBOT = {
     'name': 'User Support Bot',
     'logic_adapters': [
         'chatterbot.logic.BestMatch',
+        'chatterbot.logic.MathematicalEvaluation',
+        'chatterbot.logic.TimeLogicAdapter',
     ],
 }
