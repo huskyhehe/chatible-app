@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 
     # third-party apps
     'tailwind',
+    'chatterbot.ext.django_chatterbot',
 ]
 
 MIDDLEWARE = [
@@ -149,4 +150,13 @@ CHANNEL_LAYERS = {
             'hosts': [(os.getenv('REDIS_ENDPOINT_URI'))],
         },
     },
+}
+
+
+# Chatterbot
+CHATTERBOT = {
+    'name': 'User Support Bot',
+    'logic_adapters': [
+        'chatterbot.logic.BestMatch',
+    ],
 }
