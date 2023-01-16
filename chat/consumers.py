@@ -3,10 +3,13 @@ import json
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
+from chat import tasks
+
 
 class ChatConsumer(WebsocketConsumer):
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
+        tasks.get_response.delay(self.channel_name, text_data_json)
 
         # The consumer ChatConsumer is synchronous while the channel layer
         # methods are asynchronous. Therefore, wrap the methods in async-to-sync
