@@ -1,6 +1,6 @@
-from django.core.management import BaseCommand
 from chatterbot import ChatBot
 from chatterbot.ext.django_chatterbot import settings
+from django.core.management import BaseCommand
 from chatterbot.trainers import ListTrainer
 
 
@@ -8,8 +8,8 @@ class Command(BaseCommand):
     help = "Training the chatbot"
 
     def handle(self, *args, **options):
-        chatterbot = ChatBot(**settings.CHATTERBOT)
-        trainer = ListTrainer(chatterbot)
+        chatbot = ChatBot(**settings.CHATTERBOT)
+        trainer = ListTrainer(chatbot)
         trainer.train(
             [
                 "Hello",
