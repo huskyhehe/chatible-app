@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     # third-party apps
     'tailwind',
     'chatterbot.ext.django_chatterbot',
+    'django_browser_reload',
 ]
 
 MIDDLEWARE = [
@@ -133,12 +134,10 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
 # Tailwind
 TAILWIND_APP_NAME = 'theme'
 NPM_BIN_PATH = os.getenv('NPM_PATH')
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
 
 # Channel layers
 CHANNEL_LAYERS = {
@@ -150,13 +149,25 @@ CHANNEL_LAYERS = {
     },
 }
 
-
 # Chatterbot
 CHATTERBOT = {
     'name': 'User Support Bot',
     'logic_adapters': [
         'chatterbot.logic.BestMatch',
         'chatterbot.logic.MathematicalEvaluation',
-        'chatterbot.logic.TimeLogicAdapter',
     ],
 }
+
+# Redis Cache
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": os.getenv('REDIS_ENDPOINT_URI'),
+    },
+}
+
+# Celery
+CELERY_CACHE_BACKEND = 'default'
+CELERY_BROKER_URL = os.getenv('CELERY_BRODER_URL')
+CELERY_RESULT_BACKEND = os.getenv('REDIS_ENDPOINT_URI')
+CELERY_TASK_TRACK_STARTED = True
