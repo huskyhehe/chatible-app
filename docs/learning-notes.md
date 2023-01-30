@@ -144,9 +144,9 @@ Redis is often used in real-time applications because of its ability to store an
 <details>
 Redis can act as both a channel layer for WebSocket communication and a message broker for Celery because it is a versatile data store that can support multiple types of data structures and communication patterns. 
   
-For WebSockets, Django Channels uses Redis as a channel layer to handle the communication between the client and server. The channel layer allows Django Channels to multiplex multiple WebSocket connections over a single Redis connection, providing a way for Django to handle multiple WebSockets connections concurrently.
+- For WebSockets, Django Channels uses Redis as a channel layer to handle the communication between the client and server. The channel layer allows Django Channels to multiplex multiple WebSocket connections over a single Redis connection, providing a way for Django to handle multiple WebSockets connections concurrently.
 
-For Celery, Redis acts as a message broker to provide a reliable way to queue and manage tasks. When a task is executed by Celery, it is first placed in a Redis queue, where it can be managed and executed as needed. Redis provides a centralized location for storing task metadata, which allows multiple Celery workers to access the same task queue and coordinate the execution of tasks.
+- For Celery, Redis acts as a message broker to provide a reliable way to queue and manage tasks. When a task is executed by Celery, it is first placed in a Redis queue, where it can be managed and executed as needed. Redis provides a centralized location for storing task metadata, which allows multiple Celery workers to access the same task queue and coordinate the execution of tasks.
 
 In both cases, Redis provides a fast and reliable way to store and retrieve data, which makes it well-suited for real-time applications that require fast communication and data processing. By using Redis as both a channel layer and a message broker, you can take advantage of its versatility and performance to build scalable and robust real-time applications.
 </details>
